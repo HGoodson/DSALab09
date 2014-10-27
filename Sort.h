@@ -32,42 +32,30 @@ class Sort
 template < class T >
 T** Sort<T>::quickSort(T** items, int numItems, int (*compare) (T* one, T* two))
 {
-   //DO THIS
-   //create a new array that will be sorted and returned
-   //this is in case the original, unsorted array is also needed
-
-
-
-
-
-
-
-
-
-
+	//DO THIS
+	//create a new array that will be sorted and returned
+	//this is in case the original, unsorted array is also needed
+	T** tempArray = new T*[numItems];
+	for(int i = 0; i < numItems ; i++)
+	{
+	tempArray[i] = items[i];
+	}
+	_quickSort(tempArray, 0, numItems-1, compare);
+	return tempArray;
 }
 
 template < class T >
 void Sort<T>::_quickSort(T** items, int first, int last, int (*compare) (T* one, T* two))
 {
-   int pivotIndex;
-
-   //DO THIS
-   //make the necessary partition and recursive calls for quick sort
-   if (first < last)
-   {
-
-
-
-
-
-
-
-
-
-
-
-   }  
+	int pivotIndex;
+	//DO THIS
+	//make the necessary partition and recursive calls for quick sort
+	if (first < last)
+	{
+	pivotIndex=partition(items, first, last, compare);
+	_quickSort(items ,first, pivotIndex-1 , compare);
+	_quickSort(items , pivotIndex+1, last, compare);
+	}  
 }  
 
 template < class T >
@@ -75,29 +63,31 @@ int Sort<T>::partition(T** items, int first, int last, int (*compare) (T* one, T
 {
    //DO THIS
    //complete the partition method (Lomuto partition)
-
+	T* temp;
+	choosePivot(items, first, last); 
+	int pivot = first;
+	int ls1 = pivot;
+	for(int i = first+1; i <= last; i++)
+	{
+	int comp = (*compare)(items[i],items[pivot]);
+	if (comp < 0);
+		{
+		ls1++;
+		
+		temp=items[ls1];
+		items[ls1] = items[i];
+		items[i]=temp;
+		}
+	
+	}
+	temp=items[ls1];
+	items[ls1]=items[pivot];
+	items[pivot]=temp;
+	
    //temp is used to swap elements in the array
-   T* temp; 
-
    //initially, choosePivot does nothing           
-   choosePivot(items, first, last); 
+	return ls1;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
 
 }
 
@@ -107,13 +97,13 @@ void Sort<T>::choosePivot(T** items, int first, int last)
    //DO THIS
    //find a better item to be the partition than simply using the item in the first index
    //you will need to swap
-
-
-
-
-
-
-
+	int fixWorst = first+((last - first)/2);
+	T* temp;
+	
+	temp = items[first];
+	items[first] = items[fixWorst];
+	items[fixWorst]=temp;
+	
 }
 
 //no work below this point
